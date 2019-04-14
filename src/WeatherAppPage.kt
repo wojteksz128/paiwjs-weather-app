@@ -7,6 +7,7 @@ import kotlin.dom.clear
 class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : WeatherAppContract.View {
 
     private val citiesWeather = document.getElementById("cities-weather") as HTMLDivElement
+    private val pageAlerts = document.getElementById("page-alerts") as HTMLDivElement
 
     fun show() {
         assignAddButton()
@@ -17,11 +18,9 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
         val button = document.getElementById("city-btn-add") as HTMLButtonElement
         button.addEventListener("click", {
             val input = document.getElementById("city-input") as HTMLInputElement
-            if (presenter.addCity(input.value)) {
+            if (presenter.addCity(input.value))
                 refreshCitiesWeather()
-            } else {
-                // TODO: Jeśli nie ma takiego miasta, lub ono istnieje, wyświetl komunikat.
-            }
+            refreshAlerts()
         })
     }
 
@@ -32,5 +31,15 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
             cityDiv.textContent = it
             citiesWeather.appendChild(cityDiv)
         }
+    }
+
+    private fun refreshAlerts() {
+        pageAlerts.clear()
+        presenter.getAlerts().forEach {
+            val alertDiv = document.createElement("div") as HTMLDivElement
+            alertDiv.textContent = it.message
+            pageAlerts.appendChild(alertDiv)
+        }
+        presenter.cleanAlerts()
     }
 }
