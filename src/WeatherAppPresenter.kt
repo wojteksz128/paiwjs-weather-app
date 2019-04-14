@@ -1,22 +1,26 @@
 class WeatherAppPresenter : WeatherAppContract.Presenter {
-    private val cities = mutableListOf<String>()
+    private val citiesWeather = mutableMapOf<String, LocationWeather>()
 
     private val alerts = mutableListOf<Alert>()
+    private val api = OpenWeatherMapApi()
 
-    override fun addCity(cityName: String?): Boolean {
-        return if (cityName is String && cityName.isNotEmpty()) {
-            if (!cities.contains(cityName)) {
-                cities.add(cityName)
-                true
-            } else {
-                alerts.add(Alert("info", "City is currently displayed."))
-                false
-            }
-        } else {
+    override fun addCity(cityName: String?, callback: () -> Unit) {
+        if (cityName !is String || cityName.isEmpty()) {
             alerts.add(Alert("warn", "City with specified name not exists."))
-            false
+            return
+        }
+
+        if (citiesWeather.contains(cityName)) {
+            alerts.add(Alert("info", "City is currently displayed."))
+            return
+        }
+
+        api.getWeatherForCity(cityName) {
+            citiesWeather[cityName] = it
+            callback()
         }
     }
+
     override fun getAlerts(): Collection<Alert> {
         return alerts.toList()
     }
@@ -25,8 +29,8 @@ class WeatherAppPresenter : WeatherAppContract.Presenter {
         alerts.clear()
     }
 
-    override fun getCities(): Collection<String> {
-        return cities.toList()
+    override fun getCitiesWeather(): Collection<LocationWeather> {
+        return citiesWeather.values.toList()
     }
 }
 

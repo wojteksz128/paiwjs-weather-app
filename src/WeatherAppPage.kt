@@ -18,17 +18,16 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
         val button = document.getElementById("city-btn-add") as HTMLButtonElement
         button.addEventListener("click", {
             val input = document.getElementById("city-input") as HTMLInputElement
-            if (presenter.addCity(input.value))
-                refreshCitiesWeather()
+            presenter.addCity(input.value) { refreshCitiesWeather() }
             refreshAlerts()
         })
     }
 
     private fun refreshCitiesWeather() {
         citiesWeather.clear()
-        presenter.getCities().forEach {
+        presenter.getCitiesWeather().forEach {
             val cityDiv = document.createElement("div") as HTMLDivElement
-            cityDiv.textContent = it
+            cityDiv.textContent = it.name
             citiesWeather.appendChild(cityDiv)
         }
     }
