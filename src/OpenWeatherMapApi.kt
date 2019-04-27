@@ -25,16 +25,16 @@ object OpenWeatherMapApi {
 
 
 data class LocationWeather(
-        val base: String,
+        val base: String?,
         val clouds: Clouds,
-        val cod: Int,
-        val coord: Coord,
-        val dt: Int,
-        val id: Int,
+        val cod: Int?,
+        val coord: Coord?,
+        val dt: Int?,
+        val id: Int?,
         val main: Main,
-        val name: String,
+        val name: String?,
         val sys: Sys,
-        val visibility: Int,
+        val visibility: Int?,
         val weather: List<Weather>,
         val wind: Wind
 ) {
@@ -42,14 +42,14 @@ data class LocationWeather(
         fun fromJson(obj: dynamic): LocationWeather {
             return LocationWeather(obj.base.toString(),
                     Clouds.fromJson(obj.clouds),
-                    obj.cod.toString().toInt(),
+                    toOptional(obj.cod) { obj: dynamic -> obj.toString().toInt() },
                     Coord.fromJson(obj.coord),
-                    obj.dt.toString().toInt(),
-                    obj.id.toString().toInt(),
+                    toOptional(obj.dt) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.id) { obj: dynamic -> obj.toString().toInt() },
                     Main.fromJson(obj.main),
-                    obj.name.toString(),
+                    toOptional(obj.name) { obj: dynamic -> obj.toString() },
                     Sys.fromJson(obj.sys),
-                    obj.visibility.toString().toInt(),
+                    toOptional(obj.visibility) { obj: dynamic -> obj.toString().toInt() },
                     List(obj.weather.length.toString().toInt()) { i -> Weather.fromJson(obj.weather[i]) },
                     Wind.fromJson(obj.wind))
         }
@@ -57,100 +57,102 @@ data class LocationWeather(
 }
 
 data class Main(
-        val humidity: Int,
-        val pressure: Int,
-        val temp: Double,
-        val temp_max: Double,
-        val temp_min: Double
+        val humidity: Int?,
+        val pressure: Int?,
+        val temp: Double?,
+        val temp_max: Double?,
+        val temp_min: Double?
 ) {
     companion object {
         fun fromJson(obj: dynamic): Main {
-            return Main(obj.humidity.toString().toInt(),
-                    obj.pressure.toString().toInt(),
-                    obj.temp.toString().toDouble(),
-                    obj.temp_max.toString().toDouble(),
-                    obj.temp_min.toString().toDouble())
+            return Main(toOptional(obj.humidity) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.pressure) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.temp) { obj: dynamic -> obj.toString().toDouble() },
+                    toOptional(obj.temp_max) { obj: dynamic -> obj.toString().toDouble() },
+                    toOptional(obj.temp_min) { obj: dynamic -> obj.toString().toDouble() })
         }
     }
 }
 
 data class Wind(
-        val deg: Int,
-        val speed: Double
+        val deg: Int?,
+        val speed: Double?
 ) {
     companion object {
         fun fromJson(obj: dynamic): Wind {
-            return Wind(obj.deg.toString().toInt(),
-                    obj.speed.toString().toDouble())
+            return Wind(toOptional(obj.deg) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.speed) { obj: dynamic -> obj.toString().toDouble() })
         }
     }
 }
 
 data class Weather(
-        val description: String,
-        val icon: String,
-        val id: Int,
-        val main: String
+        val description: String?,
+        val icon: String?,
+        val id: Int?,
+        val main: String?
 ) {
     companion object {
         fun fromJson(obj: dynamic): Weather {
-            return Weather(obj.description.toString(),
-                    obj.icon.toString(),
-                    obj.id.toString().toInt(),
-                    obj.main.toString())
+            return Weather(toOptional(obj.description) { obj: dynamic -> obj.toString() },
+                    toOptional(obj.icon) { obj: dynamic -> obj.toString() },
+                    toOptional(obj.id) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.main) { obj: dynamic -> obj.toString() })
         }
     }
 }
 
 data class Sys(
-        val country: String,
-        val id: Int,
-        val message: Double,
-        val sunrise: Int,
-        val sunset: Int,
-        val type: Int
+        val country: String?,
+        val id: Int?,
+        val message: Double?,
+        val sunrise: Int?,
+        val sunset: Int?,
+        val type: Int?
 ) {
     companion object {
         fun fromJson(obj: dynamic): Sys {
-            return Sys(obj.country.toString(),
-                    obj.id.toString().toInt(),
-                    obj.message.toString().toDouble(),
-                    obj.sunrise.toString().toInt(),
-                    obj.sunset.toString().toInt(),
-                    obj.type.toString().toInt())
+            return Sys(toOptional(obj.country) { obj: dynamic -> obj.toString() },
+                    toOptional(obj.id) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.message) { obj: dynamic -> obj.toString().toDouble() },
+                    toOptional(obj.sunrise) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.sunset) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.type) { obj: dynamic -> obj.toString().toInt() })
         }
     }
 }
 
 data class Clouds(
-        val all: Int
+        val all: Int?
 ) {
     companion object {
         fun fromJson(obj: dynamic): Clouds {
-            return Clouds(obj.all.toString().toInt())
+            return Clouds(toOptional(obj.all) { obj: dynamic -> obj.toString().toInt() })
         }
     }
 }
 
 data class Coord(
-        val lat: Double,
-        val lon: Double
+        val lat: Double?,
+        val lon: Double?
 ) {
     companion object {
         fun fromJson(obj: dynamic): Coord {
-            return Coord(obj.lat.toString().toDouble(),
-                    obj.lon.toString().toDouble())
+            return Coord(toOptional(obj.lat) { obj: dynamic -> obj.toString().toDouble() },
+                    toOptional(obj.lon) { obj: dynamic -> obj.toString().toDouble() })
         }
     }
 }
 
 data class ErrorResponse(
-        val cod: Int,
-        val message: String
+        val cod: Int?,
+        val message: String?
 ) {
     companion object {
         fun fromJson(obj: dynamic): ErrorResponse {
-            return ErrorResponse(obj.cod.toString().toInt(), obj.message.toString())
+            return ErrorResponse(toOptional(obj.cod) { obj: dynamic -> obj.toString().toInt() }, toOptional(obj.message) { obj: dynamic -> obj.toString() })
         }
     }
 }
+
+fun <T> toOptional(obj: dynamic, callback: (dynamic) -> T?) = if (obj != null) callback(obj) else null
