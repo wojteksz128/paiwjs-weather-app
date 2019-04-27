@@ -1,0 +1,23 @@
+body {
+    background: #353c43;
+}
+
+.city-container {
+    background-color: #2196F3;
+}
+
+.city-temperature {
+    font-size: 22px;
+}
+
+.city-error-message {
+    color: red;
+}
+
+.card-shadow {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.card-shadow:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.28);
+}

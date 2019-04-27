@@ -1,13 +1,10 @@
-import org.w3c.dom.HTMLDivElement
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLImageElement
-import org.w3c.dom.HTMLSpanElement
+import org.w3c.dom.*
 import kotlin.browser.document
 import kotlin.dom.addClass
 
 data class CityElement(val cityName: String) : WeatherAppContract.ShowElement {
     private var cityContainer: HTMLDivElement? = null
-    private var nameHolder: HTMLSpanElement? = null
+    private var nameHolder: HTMLHeadingElement? = null
     private var weatherIconHolder: HTMLImageElement? = null
     private var weatherDescriptionHolder: HTMLSpanElement? = null
     private var temperatureHolder: HTMLSpanElement? = null
@@ -23,32 +20,44 @@ data class CityElement(val cityName: String) : WeatherAppContract.ShowElement {
             throw IllegalStateException("Element is initialized. \n $this")
         }
         cityContainer = document.createElement("div") as HTMLDivElement
-        cityContainer?.addClass("city-container", "col-4")
+        cityContainer?.addClass("col-12", "col-sm-6", "col-md-4", "col-xl-3")
 
-        nameHolder = document.createElement("span") as HTMLSpanElement
+        val cityCard = document.createElement("div") as HTMLDivElement
+        cityCard.addClass("city-container", "m-1", "card", "card-shadow")
+        cityContainer?.appendChild(cityCard)
+
+        val cityCardBody = document.createElement("div") as HTMLDivElement
+        cityCardBody.addClass("card-body")
+        cityCard.appendChild(cityCardBody)
+
+        nameHolder = document.createElement("h4") as HTMLHeadingElement
         nameHolder?.addClass("city-name")
-        cityContainer?.appendChild(nameHolder!!)
+        cityCardBody.appendChild(nameHolder!!)
 
-        weatherIconHolder = document.createElement("img") as HTMLImageElement
-        weatherIconHolder?.addClass("city-weather-icon")
-        cityContainer?.appendChild(weatherIconHolder!!)
-
-        weatherDescriptionHolder = document.createElement("span") as HTMLSpanElement
-        weatherDescriptionHolder?.addClass("city-weather-desc")
-        cityContainer?.appendChild(weatherDescriptionHolder!!)
-
-        temperatureHolder = document.createElement("span") as HTMLSpanElement
-        temperatureHolder?.addClass("city-temperature")
-        cityContainer?.appendChild(temperatureHolder!!)
+        val dataHolder = document.createElement("div") as HTMLDivElement
+        dataHolder.addClass("row", "justify-content-center")
+        cityCardBody.appendChild(dataHolder)
 
         loadingIconHolder = document.createElement("img") as HTMLImageElement
         loadingIconHolder?.addClass("city-load-icon")
         loadingIconHolder?.src = "icon/loading.svg"
-        cityContainer?.appendChild(loadingIconHolder!!)
+        dataHolder.appendChild(loadingIconHolder!!)
+
+        weatherIconHolder = document.createElement("img") as HTMLImageElement
+        weatherIconHolder?.addClass("city-weather-icon")
+        dataHolder.appendChild(weatherIconHolder!!)
+
+        temperatureHolder = document.createElement("span") as HTMLSpanElement
+        temperatureHolder?.addClass("city-temperature")
+        dataHolder.appendChild(temperatureHolder!!)
+
+        weatherDescriptionHolder = document.createElement("span") as HTMLSpanElement
+        weatherDescriptionHolder?.addClass("city-weather-desc")
+        cityCardBody.appendChild(weatherDescriptionHolder!!)
 
         errorMessageHolder = document.createElement("span") as HTMLSpanElement
-        errorMessageHolder?.addClass("city-error-message")
-        cityContainer?.appendChild(errorMessageHolder!!)
+        errorMessageHolder?.addClass("city-error-message", "row", "justify-content-center")
+        cityCardBody.appendChild(errorMessageHolder!!)
 
         refresh()
         return cityContainer!!
@@ -77,10 +86,10 @@ data class CityElement(val cityName: String) : WeatherAppContract.ShowElement {
         nameHolder?.textContent = locationWeather?.name ?: cityName
         errorMessageHolder?.textContent = if (hasError) responseError?.message else ""
 
-        weatherIconHolder?.style?.visibility = if (weatherLoaded && !hasError) "visible" else "hidden"
-        weatherDescriptionHolder?.style?.visibility = if (weatherLoaded && !hasError) "visible" else "hidden"
-        temperatureHolder?.style?.visibility = if (weatherLoaded && !hasError) "visible" else "hidden"
-        loadingIconHolder?.style?.visibility = if (weatherLoaded || hasError) "hidden" else "visible"
-        errorMessageHolder?.style?.visibility = if (hasError) "visible" else "hidden"
+        weatherIconHolder?.style?.display = if (weatherLoaded && !hasError) "flex" else "none"
+        weatherDescriptionHolder?.style?.display = if (weatherLoaded && !hasError) "flex" else "none"
+        temperatureHolder?.style?.display = if (weatherLoaded && !hasError) "flex" else "none"
+        loadingIconHolder?.style?.display = if (weatherLoaded || hasError) "none" else "flex"
+        errorMessageHolder?.style?.display = if (hasError) "flex" else "none"
     }
 }

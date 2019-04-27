@@ -26,7 +26,7 @@ data class Alert(val type: AlertType, val message: String) : WeatherAppContract.
         closeButton.addClass("close")
         closeButton.setAttribute("data-dismiss", "alert")
         closeButton.setAttribute("aria-label", "Zamknij")
-        closeButton.textContent = "\u0215"
+        closeButton.textContent = "\u00D7"
         alertContainer?.appendChild(closeButton)
 
         refresh()

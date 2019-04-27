@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather App</title>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+	<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container">
@@ -12,10 +13,10 @@
 		<h2 class="header">Pogodynka</h2>
 
 		<div class="root root-children" id="content">
-			<form>
+			<form id="city-add-form">
 				<label for="city-input">Wprowadź miasto:</label>
 				<input id="city-input" placeholder="Łódź, Warsaw, London, ..." type="text"/>
-				<button id="city-btn-add"  type="button">Dodaj miasto</button>
+				<button id="city-btn-add" type="submit">Dodaj miasto</button>
 			</form>
 
 			<div class="row" id="cities-weather"></div>

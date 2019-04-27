@@ -1,5 +1,5 @@
-import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLFormElement
 import org.w3c.dom.HTMLInputElement
 import kotlin.browser.document
 import kotlin.dom.clear
@@ -16,11 +16,13 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
     }
 
     private fun assignAddButton() {
-        val button = document.getElementById("city-btn-add") as HTMLButtonElement
-        button.addEventListener("click", {
+        val form = document.getElementById("city-add-form") as HTMLFormElement
+        form.addEventListener("submit", {
             val input = document.getElementById("city-input") as HTMLInputElement
             presenter.addCity(CityElement(input.value)) { citiesWeather.appendChild(it.prepareElement()) }
             refreshAlerts()
+            it.preventDefault()
+            it.stopPropagation()
         })
     }
 
