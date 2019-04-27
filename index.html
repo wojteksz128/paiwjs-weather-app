@@ -8,17 +8,22 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<a class="navbar-brand" href="#">Pogodynka</a>
+		<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="navbar-collapse collapse" id="navbarSupportedContent">
+			<form class="form-inline my-2 my-lg-0" id="city-add-form">
+				<input aria-label="Miasto" class="form-control mr-sm-2" id="city-input" placeholder="Miasto (Łódź, Warsaw, London...)" type="search"/>
+				<button class="btn btn-success my-2 my-sm-0" id="city-btn-add" type="submit">Dodaj miasto</button>
+			</form>
+		</div>
+	</nav>
 	<div class="container">
 		<div id="page-alerts"></div>
-		<h2 class="header">Pogodynka</h2>
-
 		<div class="root root-children" id="content">
-			<form id="city-add-form">
-				<label for="city-input">Wprowadź miasto:</label>
-				<input id="city-input" placeholder="Łódź, Warsaw, London, ..." type="text"/>
-				<button id="city-btn-add" type="submit">Dodaj miasto</button>
-			</form>
-
 			<div class="row" id="cities-weather"></div>
 		</div>
 	</div>

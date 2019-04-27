@@ -20,6 +20,7 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
         form.addEventListener("submit", {
             val input = document.getElementById("city-input") as HTMLInputElement
             presenter.addCity(CityElement(input.value)) { citiesWeather.appendChild(it.prepareElement()) }
+            input.value = ""
             refreshAlerts()
             it.preventDefault()
             it.stopPropagation()
