@@ -3,6 +3,7 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLImageElement
 import org.w3c.dom.HTMLSpanElement
 import kotlin.browser.document
+import kotlin.dom.addClass
 
 data class CityElement(val cityName: String) : WeatherAppContract.ShowElement {
     private var cityContainer: HTMLDivElement? = null
@@ -22,24 +23,31 @@ data class CityElement(val cityName: String) : WeatherAppContract.ShowElement {
             throw IllegalStateException("Element is initialized. \n $this")
         }
         cityContainer = document.createElement("div") as HTMLDivElement
+        cityContainer?.addClass("city-container")
 
         nameHolder = document.createElement("span") as HTMLSpanElement
+        nameHolder?.addClass("city-name")
         cityContainer?.appendChild(nameHolder!!)
 
         weatherIconHolder = document.createElement("img") as HTMLImageElement
+        weatherIconHolder?.addClass("city-weather-icon")
         cityContainer?.appendChild(weatherIconHolder!!)
 
         weatherDescriptionHolder = document.createElement("span") as HTMLSpanElement
+        weatherDescriptionHolder?.addClass("city-weather-desc")
         cityContainer?.appendChild(weatherDescriptionHolder!!)
 
         temperatureHolder = document.createElement("span") as HTMLSpanElement
+        temperatureHolder?.addClass("city-temperature")
         cityContainer?.appendChild(temperatureHolder!!)
 
         loadingIconHolder = document.createElement("img") as HTMLImageElement
+        loadingIconHolder?.addClass("city-load-icon")
         loadingIconHolder?.src = "icon/loading.svg"
         cityContainer?.appendChild(loadingIconHolder!!)
 
         errorMessageHolder = document.createElement("span") as HTMLSpanElement
+        errorMessageHolder?.addClass("city-error-message")
         cityContainer?.appendChild(errorMessageHolder!!)
 
         refresh()
