@@ -25,7 +25,6 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
     }
 
     private fun assignInitialCities() {
-        // TODO: Zmień na zależność od cityelement
         presenter.addCity(CityElement("Łódź")) { citiesWeather.appendChild(it.prepareElement()) }
     }
 
