@@ -11,25 +11,22 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
 
     fun show() {
         assignAddButton()
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        assignInitialCities()
+        refreshAlerts()
     }
 
     private fun assignAddButton() {
         val button = document.getElementById("city-btn-add") as HTMLButtonElement
         button.addEventListener("click", {
             val input = document.getElementById("city-input") as HTMLInputElement
-            presenter.addCity(input.value) { refreshCitiesWeather() }
+            presenter.addCity(CityElement(input.value)) { citiesWeather.appendChild(it.prepareElement()) }
             refreshAlerts()
         })
     }
 
-    private fun refreshCitiesWeather() {
-        citiesWeather.clear()
-        presenter.getCitiesWeather().forEach {
-            val cityDiv = document.createElement("div") as HTMLDivElement
-            cityDiv.textContent = it.name
-            citiesWeather.appendChild(cityDiv)
-        }
+    private fun assignInitialCities() {
+        // TODO: Zmień na zależność od cityelement
+        presenter.addCity(CityElement("Łódź")) { citiesWeather.appendChild(it.prepareElement()) }
     }
 
     private fun refreshAlerts() {

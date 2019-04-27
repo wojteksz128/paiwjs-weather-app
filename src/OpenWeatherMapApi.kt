@@ -1,6 +1,6 @@
 import org.w3c.xhr.XMLHttpRequest
 
-class OpenWeatherMapApi {
+object OpenWeatherMapApi {
 
     fun getWeatherForCity(cityName: String, callback: (LocationWeather) -> Unit) {
         val url = "http://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=c5489e2736d2af844806db28101147f1"

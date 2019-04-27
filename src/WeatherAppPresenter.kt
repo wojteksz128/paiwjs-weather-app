@@ -1,24 +1,32 @@
+import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLElement
+import kotlin.browser.document
+
 class WeatherAppPresenter : WeatherAppContract.Presenter {
-    private val citiesWeather = mutableMapOf<String, LocationWeather>()
+    private val cities = mutableListOf<CityElement>()
 
     private val alerts = mutableListOf<Alert>()
-    private val api = OpenWeatherMapApi()
 
-    override fun addCity(cityName: String?, callback: () -> Unit) {
-        if (cityName !is String || cityName.isEmpty()) {
-            alerts.add(Alert("warn", "City with specified name not exists."))
-            return
-        }
+    override fun addCity(city: CityElement, callback: (CityElement) -> Unit) {
+        if (hasEmptyName(city) || isInList(city)) return
+        cities.add(city)
+        callback(city)
+    }
 
-        if (citiesWeather.contains(cityName)) {
+    private fun isInList(city: CityElement): Boolean {
+        if (city in cities) {
             alerts.add(Alert("info", "City is currently displayed."))
-            return
+            return true
         }
+        return false
+    }
 
-        api.getWeatherForCity(cityName) {
-            citiesWeather[cityName] = it
-            callback()
+    private fun hasEmptyName(city: CityElement): Boolean {
+        if (city.cityName.isEmpty()) {
+            alerts.add(Alert("warn", "City with specified name not exists."))
+            return true
         }
+        return false
     }
 
     override fun getAlerts(): Collection<Alert> {
@@ -29,9 +37,29 @@ class WeatherAppPresenter : WeatherAppContract.Presenter {
         alerts.clear()
     }
 
-    override fun getCitiesWeather(): Collection<LocationWeather> {
-        return citiesWeather.values.toList()
+    override fun getCitiesWeather(): List<CityElement> {
+        return cities.toList()
     }
 }
 
-data class Alert(val type: String, val message: String)
+data class Alert(val type: String, val message: String) : WeatherAppContract.AlertElement {
+    private var alertContainer: HTMLDivElement? = null
+
+    override fun isInitialized(): Boolean = alertContainer != null
+
+    override fun prepareElement(): HTMLElement {
+        if (isInitialized()) {
+            throw IllegalStateException("Element is initialized. \n $this")
+        }
+        alertContainer = document.createElement("div") as HTMLDivElement
+        refresh()
+        return alertContainer!!
+    }
+
+    override fun refresh() {
+        if (!isInitialized()) {
+            throw IllegalStateException("Element is not initialized. \n $this")
+        }
+        alertContainer!!.textContent = message
+    }
+}
