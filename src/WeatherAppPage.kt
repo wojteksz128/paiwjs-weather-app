@@ -1,3 +1,4 @@
+import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLFormElement
 import org.w3c.dom.HTMLInputElement
@@ -10,12 +11,13 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
     private val pageAlerts = document.getElementById("page-alerts") as HTMLDivElement
 
     fun show() {
-        assignAddButton()
+        assignAddForm()
+        assignRefreshOption()
         assignInitialCities()
         refreshAlerts()
     }
 
-    private fun assignAddButton() {
+    private fun assignAddForm() {
         val form = document.getElementById("city-add-form") as HTMLFormElement
         form.addEventListener("submit", {
             val input = document.getElementById("city-input") as HTMLInputElement
@@ -24,6 +26,13 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
             refreshAlerts()
             it.preventDefault()
             it.stopPropagation()
+        })
+    }
+
+    private fun assignRefreshOption() {
+        val option = document.getElementById("refresh-weather") as HTMLAnchorElement
+        option.addEventListener("click", {
+            presenter.getCitiesWeather().forEach { it.refresh() }
         })
     }
 

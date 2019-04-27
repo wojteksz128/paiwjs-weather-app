@@ -42,14 +42,14 @@ data class LocationWeather(
         fun fromJson(obj: dynamic): LocationWeather {
             return LocationWeather(obj.base.toString(),
                     Clouds.fromJson(obj.clouds),
-                    toOptional(obj.cod) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.cod) { obj2: dynamic -> obj2.toString().toInt() },
                     Coord.fromJson(obj.coord),
-                    toOptional(obj.dt) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.id) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.dt) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.id) { obj2: dynamic -> obj2.toString().toInt() },
                     Main.fromJson(obj.main),
-                    toOptional(obj.name) { obj: dynamic -> obj.toString() },
+                    toOptional(obj.name) { obj2: dynamic -> obj2.toString() },
                     Sys.fromJson(obj.sys),
-                    toOptional(obj.visibility) { obj: dynamic -> obj.toString().toInt() },
+                    toOptional(obj.visibility) { obj2: dynamic -> obj2.toString().toInt() },
                     List(obj.weather.length.toString().toInt()) { i -> Weather.fromJson(obj.weather[i]) },
                     Wind.fromJson(obj.wind))
         }
@@ -65,11 +65,11 @@ data class Main(
 ) {
     companion object {
         fun fromJson(obj: dynamic): Main {
-            return Main(toOptional(obj.humidity) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.pressure) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.temp) { obj: dynamic -> obj.toString().toDouble() },
-                    toOptional(obj.temp_max) { obj: dynamic -> obj.toString().toDouble() },
-                    toOptional(obj.temp_min) { obj: dynamic -> obj.toString().toDouble() })
+            return Main(toOptional(obj.humidity) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.pressure) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.temp) { obj2: dynamic -> obj2.toString().toDouble() },
+                    toOptional(obj.temp_max) { obj2: dynamic -> obj2.toString().toDouble() },
+                    toOptional(obj.temp_min) { obj2: dynamic -> obj2.toString().toDouble() })
         }
     }
 }
@@ -80,8 +80,8 @@ data class Wind(
 ) {
     companion object {
         fun fromJson(obj: dynamic): Wind {
-            return Wind(toOptional(obj.deg) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.speed) { obj: dynamic -> obj.toString().toDouble() })
+            return Wind(toOptional(obj.deg) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.speed) { obj2: dynamic -> obj2.toString().toDouble() })
         }
     }
 }
@@ -94,10 +94,10 @@ data class Weather(
 ) {
     companion object {
         fun fromJson(obj: dynamic): Weather {
-            return Weather(toOptional(obj.description) { obj: dynamic -> obj.toString() },
-                    toOptional(obj.icon) { obj: dynamic -> obj.toString() },
-                    toOptional(obj.id) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.main) { obj: dynamic -> obj.toString() })
+            return Weather(toOptional(obj.description) { obj2: dynamic -> obj2.toString() },
+                    toOptional(obj.icon) { obj2: dynamic -> obj2.toString() },
+                    toOptional(obj.id) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.main) { obj2: dynamic -> obj2.toString() })
         }
     }
 }
@@ -112,12 +112,12 @@ data class Sys(
 ) {
     companion object {
         fun fromJson(obj: dynamic): Sys {
-            return Sys(toOptional(obj.country) { obj: dynamic -> obj.toString() },
-                    toOptional(obj.id) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.message) { obj: dynamic -> obj.toString().toDouble() },
-                    toOptional(obj.sunrise) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.sunset) { obj: dynamic -> obj.toString().toInt() },
-                    toOptional(obj.type) { obj: dynamic -> obj.toString().toInt() })
+            return Sys(toOptional(obj.country) { obj2: dynamic -> obj2.toString() },
+                    toOptional(obj.id) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.message) { obj2: dynamic -> obj2.toString().toDouble() },
+                    toOptional(obj.sunrise) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.sunset) { obj2: dynamic -> obj2.toString().toInt() },
+                    toOptional(obj.type) { obj2: dynamic -> obj2.toString().toInt() })
         }
     }
 }
@@ -127,7 +127,7 @@ data class Clouds(
 ) {
     companion object {
         fun fromJson(obj: dynamic): Clouds {
-            return Clouds(toOptional(obj.all) { obj: dynamic -> obj.toString().toInt() })
+            return Clouds(toOptional(obj.all) { obj2: dynamic -> obj2.toString().toInt() })
         }
     }
 }
@@ -138,8 +138,8 @@ data class Coord(
 ) {
     companion object {
         fun fromJson(obj: dynamic): Coord {
-            return Coord(toOptional(obj.lat) { obj: dynamic -> obj.toString().toDouble() },
-                    toOptional(obj.lon) { obj: dynamic -> obj.toString().toDouble() })
+            return Coord(toOptional(obj.lat) { obj2: dynamic -> obj2.toString().toDouble() },
+                    toOptional(obj.lon) { obj2: dynamic -> obj2.toString().toDouble() })
         }
     }
 }
@@ -150,7 +150,7 @@ data class ErrorResponse(
 ) {
     companion object {
         fun fromJson(obj: dynamic): ErrorResponse {
-            return ErrorResponse(toOptional(obj.cod) { obj: dynamic -> obj.toString().toInt() }, toOptional(obj.message) { obj: dynamic -> obj.toString() })
+            return ErrorResponse(toOptional(obj.cod) { obj2: dynamic -> obj2.toString().toInt() }, toOptional(obj.message) { obj2: dynamic -> obj2.toString() })
         }
     }
 }
