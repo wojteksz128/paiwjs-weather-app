@@ -23,7 +23,7 @@ data class CityElement(val cityName: String) : WeatherAppContract.ShowElement {
             throw IllegalStateException("Element is initialized. \n $this")
         }
         cityContainer = document.createElement("div") as HTMLDivElement
-        cityContainer?.addClass("city-container")
+        cityContainer?.addClass("city-container", "col-4")
 
         nameHolder = document.createElement("span") as HTMLSpanElement
         nameHolder?.addClass("city-name")

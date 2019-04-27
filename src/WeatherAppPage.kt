@@ -31,9 +31,7 @@ class WeatherAppPage(private val presenter: WeatherAppContract.Presenter) : Weat
     private fun refreshAlerts() {
         pageAlerts.clear()
         presenter.getAlerts().forEach {
-            val alertDiv = document.createElement("div") as HTMLDivElement
-            alertDiv.textContent = it.message
-            pageAlerts.appendChild(alertDiv)
+            pageAlerts.appendChild(it.prepareElement())
         }
         presenter.cleanAlerts()
     }

@@ -3,22 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather App</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
 <body>
-    <div id="page-alerts"></div>
-    <h2 class="header">Weather App</h2>
+	<div class="container">
+		<div id="page-alerts"></div>
+		<h2 class="header">Pogodynka</h2>
 
-	<div class="root root-children" id="content">
-        <form>
-            <label for="city-input">Put city name</label>
-            <input id="city-input" type="text"/>
-            <button id="city-btn-add"  type="button">Add city</button>
-        </form>
+		<div class="root root-children" id="content">
+			<form>
+				<label for="city-input">Wprowadź miasto:</label>
+				<input id="city-input" placeholder="Łódź, Warsaw, London, ..." type="text"/>
+				<button id="city-btn-add"  type="button">Dodaj miasto</button>
+			</form>
 
-        <div id="cities-weather"></div>
-    </div>
+			<div class="row" id="cities-weather"></div>
+		</div>
+	</div>
 
     <script src="out/production/WeatherWebApp/lib/kotlin.js" type="application/javascript"></script>
     <script src="out/production/WeatherWebApp/WeatherWebApp.js" type="application/javascript"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
